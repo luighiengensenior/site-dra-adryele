@@ -326,3 +326,21 @@
       .nav-links {display:none;position:absolute;top:72px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:20px;flex-direction:column;align-items:stretch;gap:15px;box-shadow:0 15px 30px #224c6b16;}
       .nav-links.open {display:flex;}
     }
+
+/* Contatos falham de forma segura sem numero validado. */
+a.contact-unavailable {
+  opacity: .55;
+  filter: grayscale(.4);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.contact-config-warning {
+  margin: 14px 0;
+  padding: 12px 16px;
+  border: 1px solid #b9dbea;
+  border-radius: 12px;
+  background: #edf7ff;
+  color: #123d5a;
+  font-size: .92rem;
+  line-height: 1.5;
+}

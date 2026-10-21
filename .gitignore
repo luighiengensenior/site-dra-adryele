@@ -1,4 +1,4 @@
-# Publicacao por lista permitida: todos os demais arquivos ficam FORA do GitHub.
+# PUBLICAÇÃO POR LISTA PERMITIDA — não use git add -f para burlar.
 *
 !.gitignore
 !.nojekyll
@@ -11,4 +11,8 @@
 !fotos/*.jpeg
 !fotos/*.jpg
 !fotos/*.png
-# Nunca adicione manualmente backups, segredos, arquivos .env ou paineis privados.
+!.github/
+!.github/workflows/
+!.github/workflows/auditoria.yml
+!.github/scripts/
+!.github/scripts/auditoria.py

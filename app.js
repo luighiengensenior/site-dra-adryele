@@ -2,18 +2,39 @@
 (() => {
   const config = window.SITE_CONFIG || {};
   const number = String(config.whatsappNumber || '').replace(/\D/g, '');
+  // 55 + DDD + nove digitos, com 9 inicial (celular brasileiro).
+  const whatsappConfigured = /^55[1-9]\d9\d{8}$/.test(number);
   const $ = id => document.getElementById(id);
-  const today = new Date(); today.setHours(0,0,0,0);
+  const getToday = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+  const today = getToday();
   const dateKey = d => [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
   const makeLocalDate = key => { const parts=key.split('-').map(Number); return new Date(parts[0],parts[1]-1,parts[2]); };
-
-  // WhatsApp: abrimos o link com o número fornecido, sem supor um dígito adicional.
   const directMessage = 'Olá, Dra. Adryele! Gostaria de informações sobre um atendimento veterinário domiciliar.';
-  const makeWA = message => 'https://wa.me/'+number+'?text='+encodeURIComponent(message);
+  const makeWA = message => whatsappConfigured ? 'https://wa.me/'+number+'?text='+encodeURIComponent(message) : null;
   document.querySelectorAll('[data-whatsapp="direct"]').forEach(link => {
-    link.href = makeWA(directMessage);
-    link.target='_blank';link.rel='noopener noreferrer';
+    if (whatsappConfigured) {
+      link.href = makeWA(directMessage);
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.referrerPolicy = 'no-referrer';
+    } else {
+      link.removeAttribute('href');
+      link.removeAttribute('target');
+      link.setAttribute('aria-disabled','true');
+      link.tabIndex = -1;
+      link.classList.add('contact-unavailable');
+      link.textContent = 'WhatsApp em configuração';
+      link.setAttribute('title','WhatsApp aguardando configuracao');
+    }
   });
+  const setupAlert = $('whatsappSetupAlert');
+  if (setupAlert && !whatsappConfigured) setupAlert.hidden = false;
+  const sendButton = $('bookingForm')?.querySelector('button[type="submit"]');
+  if (sendButton && !whatsappConfigured) {
+    sendButton.disabled = true;
+    sendButton.textContent = 'WhatsApp em configuração';
+    sendButton.title = 'O número completo será configurado após confirmação';
+  }
 
   const navToggle=$('navToggle'), navLinks=$('navLinks');
   navToggle?.addEventListener('click', () => {
@@ -65,7 +86,7 @@
   const days=$('calendarDays'),monthLabel=$('monthLabel'),prev=$('prevMonth'),next=$('nextMonth');
   const notice=$('availabilityNotice'),hint=$('bookingHint');
   let viewing=new Date(today.getFullYear(),today.getMonth(),1);
-  let chosen=null, states=new Map(), defaultStatus='available', loading=false, loadError=false, requested=0;
+  let chosen=null, states=new Map(), defaultStatus='blocked', loading=false, loadError=false, requested=0;
   const maxMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
   const stateFor=key=>states.get(key)||defaultStatus;
   const monthStart=()=>dateKey(new Date(viewing.getFullYear(),viewing.getMonth(),1));
@@ -83,7 +104,8 @@
     }
     const results = new Map();
     for (const [day,status] of Object.entries(data.days)) {
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !['available','blocked','full'].includes(status)) {
+      const validDay = /^\d{4}-\d{2}-\d{2}$/.test(day) && dateKey(makeLocalDate(day)) === day;
+      if (!validDay || !['available','blocked','full'].includes(status)) {
         throw new Error('Data ou status incorreto no calendario.');
       }
       results.set(day,status);
@@ -96,7 +118,8 @@
     days.replaceChildren();
     const first=new Date(viewing.getFullYear(),viewing.getMonth(),1);
     const total=new Date(viewing.getFullYear(),viewing.getMonth()+1,0).getDate();
-    prev.disabled=viewing.getFullYear()===today.getFullYear()&&viewing.getMonth()===today.getMonth();
+    const currentToday = getToday();
+    prev.disabled=viewing.getFullYear()===currentToday.getFullYear()&&viewing.getMonth()===currentToday.getMonth();
     next.disabled=viewing.getFullYear()===maxMonth.getFullYear()&&viewing.getMonth()===maxMonth.getMonth();
     for(let n=0;n<first.getDay();n++){
       const space=document.createElement('span');space.className='day spacer';days.appendChild(space);
@@ -104,10 +127,10 @@
     for(let n=1;n<=total;n++){
       const date=new Date(viewing.getFullYear(),viewing.getMonth(),n),key=dateKey(date),status=stateFor(key);
       const btn=document.createElement('button');btn.type='button';btn.textContent=n;
-      const canChoose=!loading&&!loadError&&date>=today&&status==='available';
-      btn.className='day '+(date<today?'past':status==='full'?'lotado':status==='blocked'?'blocked':'available');
+      const canChoose=!loading&&!loadError&&date>=currentToday&&status==='available';
+      btn.className='day '+(date<currentToday?'past':status==='full'?'lotado':status==='blocked'?'blocked':'available');
       btn.disabled=!canChoose;
-      const note=date<today?'dia passado':status==='full'?'lotado':status==='blocked'?'indisponível':'disponível';
+      const note=date<currentToday?'dia passado':status==='full'?'lotado':status==='blocked'?'indisponível':'disponível';
       btn.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+', '+note);
       btn.setAttribute('title',note);
       btn.setAttribute('aria-pressed',String(chosen===key));
@@ -129,10 +152,14 @@
       if(requestId!==requested)return;
       states=data.results;defaultStatus=data.defaultStatus;
       loading=false;
-      if(chosen&&stateFor(chosen)!=='available'){
+      if(chosen&&(stateFor(chosen)!=='available'||makeLocalDate(chosen)<getToday())){
         chosen=null;hint.textContent='A data escolhida ficou indisponivel. Selecione outra.';
       }
-      notice.textContent='Datas livres podem ser solicitadas. A confirmacao sera feita somente pelo WhatsApp.';
+      const hasAvailableThisMonth = [...states.entries()].some(([key,status]) =>
+        key >= monthStart() && key <= monthEnd() && status === 'available' && makeLocalDate(key) >= getToday());
+      notice.textContent = hasAvailableThisMonth || defaultStatus === 'available'
+        ? 'Datas livres podem ser solicitadas. A confirmação será feita somente pelo WhatsApp.'
+        : 'Nenhuma data liberada neste mês. Consulte novamente em outro momento.';
       notice.classList.remove('warn');drawCalendar();
     }catch(error){
       if(requestId!==requested)return;
@@ -157,7 +184,8 @@
   $('bookingForm').addEventListener('submit', async event=>{
     event.preventDefault();
     if(!chosen){alert('Selecione uma data disponível no calendário.');return;}
-    if(makeLocalDate(chosen)<today){alert('Selecione um dia futuro.');return;}
+    if(makeLocalDate(chosen)<getToday()){alert('Selecione um dia futuro.');return;}
+    if (!whatsappConfigured) { alert('WhatsApp ainda não configurado.'); return; }
     if(!chosenServices().length){alert('Marque pelo menos um serviço desejado.');return;}
     if(loading||loadError){alert('A disponibilidade não pôde ser confirmada no calendário. Use o botão de contato direto.');return;}
     const submit=event.currentTarget.querySelector('button[type="submit"]');
@@ -166,7 +194,7 @@
       // Evita enviar uma data que acabou de ser bloqueada no arquivo publicado.
       const fresh = await getMonthStatus();
       const freshStatus = fresh.results.get(chosen) || fresh.defaultStatus;
-      if(freshStatus !== 'available') {
+      if(freshStatus !== 'available' || makeLocalDate(chosen) < getToday()) {
         alert('Essa data foi bloqueada ou lotou. Selecione outra.');
         await refreshCalendar();return;
       }
@@ -180,8 +208,9 @@
         'Poderia informar a disponibilidade e os valores?'
       ].join('\n');
       const url=makeWA(msg);
-      // Navegação direta evita bloqueadores de pop-up que podem impedir window.open após fetch.
-      window.location.href=url;
+      // Navegação apenas com numero validado; nada é transmitido ao nosso servidor.
+      if (!url) throw new Error('Contato nao configurado');
+      window.location.assign(url);
     }catch(error){
       alert('Não foi possível confirmar a disponibilidade. Tente novamente ou fale pelo WhatsApp.');
       console.error(error);

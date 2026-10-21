@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#eff8ff">
   <meta name="description" content="Dra. Adryele: atendimento veterinário domiciliar para cães e gatos no Distrito Federal. Consultas, vacinas, exames laboratoriais, microchipagem e cuidados veterinários.">
@@ -187,9 +187,10 @@
           </div>
           <button class="btn primary" type="submit">Enviar solicitação pelo WhatsApp ↗</button>
         </form>
-        <p class="booking-caption">Os dados preenchidos são enviados pelo seu navegador ao WhatsApp apenas quando você confirma o envio. Este site não armazena suas informações em um banco de dados.</p>
+        <p class="booking-caption">Os dados só serão compartilhados com o WhatsApp quando você confirmar o envio no aplicativo. O site não mantém banco de dados de clientes; o WhatsApp poderá tratar essas informações conforme sua própria política de privacidade.</p>
         <p class="booking-caption" id="bookingHint" aria-live="polite">A solicitação de data não garante a reserva; a Dra. Adryele confirma pelo WhatsApp.</p>
-        <div class="direct-contact"><span>Prefere tirar uma dúvida antes?</span><a class="btn whatsapp" data-whatsapp="direct" target="_blank" rel="noopener noreferrer" href="https://wa.me/556192374671">☏ Conversar diretamente no WhatsApp ↗</a></div>
+        <p class="contact-config-warning" id="whatsappSetupAlert" role="status" hidden>WhatsApp temporariamente indisponível. O número profissional ainda está sendo confirmado.</p>
+        <div class="direct-contact"><span>Prefere tirar uma dúvida antes?</span><a class="btn whatsapp" data-whatsapp="direct" target="_blank" rel="noopener noreferrer" href="#agendamento">☏ Conversar diretamente no WhatsApp ↗</a></div>
       </div>
     </div>
   </section>
@@ -201,7 +202,7 @@
   
 </main>
 <footer><div class="container"><div><strong>Dra. Adryele Gonçalves Dias Primo</strong><p>Medicina Veterinária Domiciliar • Distrito Federal</p><p>CRMV-DF 5341 · CNPJ 48.832.255/0001-47</p></div><p>© <span id="year"></span> Dra. Adryele. Todos os direitos reservados.</p></div></footer>
-<a href="https://wa.me/556192374671" data-whatsapp="direct" class="floating-contact" target="_blank" rel="noopener noreferrer" aria-label="Conversar com a Dra. Adryele pelo WhatsApp">☏ Falar no WhatsApp ↗</a>
+<a href="#agendamento" data-whatsapp="direct" class="floating-contact" target="_blank" rel="noopener noreferrer" aria-label="Conversar com a Dra. Adryele pelo WhatsApp">☏ Falar no WhatsApp ↗</a>
 <script src="config.js"></script>
 <script src="app.js" defer></script>
 </body>
