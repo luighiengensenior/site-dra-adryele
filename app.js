@@ -95,11 +95,11 @@
   // A disponibilidade e PUBLICA e somente LEITURA. Visitantes nunca gravam alteracoes.
   // As datas sao alteradas pelo responsavel no arquivo disponibilidade.json e publicadas via GitHub.
   async function getMonthStatus() {
-    const res = await fetch('disponibilidade.json', {cache:'no-store'});
+    const res = await fetch('disponibilidade.json?v=7-0', {cache:'no-store'});
     if (!res.ok) throw new Error('Agenda nao pode ser consultada ('+res.status+').');
     const data = await res.json();
     if (!data || !data.days || typeof data.days !== 'object' || Array.isArray(data.days) ||
-        !['available','blocked','full'].includes(data.defaultStatus)) {
+        data.defaultStatus !== 'blocked') {
       throw new Error('Formato de agenda invalido.');
     }
     const results = new Map();
@@ -125,16 +125,20 @@
       const space=document.createElement('span');space.className='day spacer';days.appendChild(space);
     }
     for(let n=1;n<=total;n++){
-      const date=new Date(viewing.getFullYear(),viewing.getMonth(),n),key=dateKey(date),status=stateFor(key);
+      const date=new Date(viewing.getFullYear(),viewing.getMonth(),n);
+      const key=dateKey(date),status=stateFor(key);
+      const visible=!loading&&!loadError&&date>=currentToday&&status==='available';
+      // Só os dias liberados aparecem; os espaços vazios mantêm a grade alinhada.
+      if (!visible) {
+        const empty=document.createElement('span');empty.className='day empty-date';
+        empty.setAttribute('aria-hidden','true');days.appendChild(empty);continue;
+      }
       const btn=document.createElement('button');btn.type='button';btn.textContent=n;
-      const canChoose=!loading&&!loadError&&date>=currentToday&&status==='available';
-      btn.className='day '+(date<currentToday?'past':status==='full'?'lotado':status==='blocked'?'blocked':'available');
-      btn.disabled=!canChoose;
-      const note=date<currentToday?'dia passado':status==='full'?'lotado':status==='blocked'?'indisponível':'disponível';
-      btn.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+', '+note);
-      btn.setAttribute('title',note);
+      btn.className='day available';
+      btn.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+', disponível');
+      btn.title='Disponível para solicitar';
       btn.setAttribute('aria-pressed',String(chosen===key));
-      if(chosen===key&&canChoose)btn.classList.add('selected');
+      if(chosen===key)btn.classList.add('selected');
       btn.addEventListener('click',()=>{
         chosen=key;drawCalendar();
         hint.textContent='Data solicitada: '+date.toLocaleDateString('pt-BR')+'. A reserva só acontece após confirmação pelo WhatsApp.';

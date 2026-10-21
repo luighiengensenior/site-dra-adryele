@@ -344,3 +344,16 @@ a.contact-unavailable {
   font-size: .92rem;
   line-height: 1.5;
 }
+
+/* V7: Zazuu e calendário apenas com dias liberados */
+.zazuu-partner {display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:30px;padding:26px 29px;background:linear-gradient(120deg,#edfaff,#f8fcff);border:1px solid #bde2ef;border-radius:20px;box-shadow:0 9px 26px rgba(18,96,145,.07)}
+.zazuu-copy {max-width:750px}
+.zazuu-partner h3 {font-size:clamp(1.15rem,2vw,1.45rem);margin:9px 0 8px}
+.zazuu-partner p {font-size:.9rem;color:var(--muted);margin:0}
+.zazuu-link {background:#126f8f;color:#fff;white-space:nowrap;flex-shrink:0}
+.zazuu-link:hover {background:#0b556d}
+.other-regions {font-weight:700;font-size:.91rem;margin:-11px 0 24px;color:#47738b}
+.calendar-days .day.empty-date {border:0;background:transparent;pointer-events:none;cursor:default}
+.calendar-days .day.available {background:#eaf7ff;border:1px solid #a1d8eb;color:#0a5b86}
+.calendar-days .day.available.selected {background:var(--blue);color:#fff;border-color:var(--blue)}
+@media(max-width:700px){.zazuu-partner{padding:22px;flex-direction:column;align-items:stretch;gap:20px}.zazuu-link{white-space:normal;text-align:center}}

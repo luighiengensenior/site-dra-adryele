@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=7-0">
 </head>
 <body>
 <header>
@@ -69,6 +69,14 @@
         <article class="card"><div class="card-icon" aria-hidden="true">🐾</div><h3>Microchipagem</h3><p>Identificação eletrônica para auxiliar no reconhecimento e na segurança do seu pet.</p></article>
         <article class="card"><div class="card-icon" aria-hidden="true">🩹</div><h3>Curativos</h3><p>Avaliação e realização de curativos, além de orientações para os cuidados durante a recuperação.</p></article>
       </div>
+      <aside class="zazuu-partner" aria-labelledby="zazuuTitle">
+        <div class="zazuu-copy">
+          <span class="eyebrow">Outra forma de solicitar atendimento</span>
+          <h3 id="zazuuTitle">Atendimento pela plataforma Zazuu</h3>
+          <p>A Dra. Adryele também aceita solicitações pela plataforma <strong>Zazuu Pet</strong>. Consulte os serviços e as condições disponíveis diretamente na plataforma.</p>
+        </div>
+        <a class="btn zazuu-link" href="https://zazuu.pet/services" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Conhecer os serviços na plataforma Zazuu Pet (abre em nova aba)">Acessar Zazuu Pet ↗</a>
+      </aside>
       <p class="services-footnote">Os procedimentos dependem de avaliação veterinária, indicação clínica e disponibilidade. Para viagens internacionais, documentos oficiais podem depender de autoridades competentes.</p>
     </div>
   </section>
@@ -76,7 +84,7 @@
     <div class="container split">
       <div class="illustration"><img loading="lazy" src="fotos/atendimento-07.jpeg" alt="Dra. Adryele em atendimento domiciliar com gato"></div>
       <div class="split-copy"><span class="eyebrow">Áreas atendidas</span><h2>Atendimento no conforto da sua casa</h2><p>A Dra. Adryele realiza visitas domiciliares em diferentes regiões do Distrito Federal. Consulte a disponibilidade e o deslocamento para seu endereço.</p>
-        <div class="areas"><span class="area">Plano Piloto</span><span class="area">Guará</span><span class="area">Taguatinga</span><span class="area">Samambaia</span><span class="area">Riacho Fundo</span><span class="area">Águas Claras</span></div>
+        <div class="areas"><span class="area">Plano Piloto</span><span class="area">Samambaia</span><span class="area">Taguatinga</span><span class="area">Vicente Pires</span><span class="area">Águas Claras</span><span class="area">Guará</span><span class="area">Riacho Fundo</span><span class="area">Ceilândia</span><span class="area">Recanto das Emas</span><span class="area">Sudoeste</span><span class="area">Octogonal</span><span class="area">Cruzeiro</span><span class="area">Noroeste</span><span class="area">Setor de Mansões</span><span class="area">Park Way</span><span class="area">Núcleo Bandeirante</span><span class="area">Candangolândia</span></div><p class="other-regions">Outras regiões a combinar, conforme disponibilidade e deslocamento.</p>
         <a class="btn primary" href="#agendamento">Ver calendário ↗</a>
       </div>
     </div>
@@ -154,7 +162,7 @@
   </section>
   <section class="booking" id="agendamento">
     <div class="container booking-wrap">
-      <div class="booking-copy"><span class="eyebrow">Agende uma visita</span><h2>Escolha uma data para cuidar do seu melhor amigo.</h2><p>Selecione o dia desejado, informe alguns dados e envie uma solicitação pelo WhatsApp. A equipe confirma os horários disponíveis diretamente com você.</p>
+      <div class="booking-copy"><span class="eyebrow">Agende uma visita</span><h2>Escolha uma data para cuidar do seu melhor amigo.</h2><p>Somente os dias liberados pela Dra. Adryele aparecem no calendário. Escolha uma data, informe seus dados e envie a solicitação pelo WhatsApp. O atendimento depende de confirmação.</p>
         <ul class="steps"><li><b>1</b> Selecione uma data no calendário</li><li><b>2</b> Preencha os dados do atendimento</li><li><b>3</b> Envie o pedido pelo WhatsApp</li></ul>
       </div>
       <div class="booking-card">
@@ -162,13 +170,13 @@
         <div class="calendar-head"><strong id="monthLabel" aria-live="polite"></strong><div class="cal-buttons"><button type="button" id="prevMonth" aria-label="Mês anterior">‹</button><button type="button" id="nextMonth" aria-label="Próximo mês">›</button></div></div>
         <div class="weekdays" aria-hidden="true"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
         <div id="calendarDays" class="calendar-days" role="group" aria-label="Escolha o dia desejado"></div>
-        <div class="calendar-legend" aria-label="Legenda do calendário"><span><i class="legend-dot available"></i> Disponível</span><span><i class="legend-dot busy"></i> Lotado</span><span><i class="legend-dot blocked"></i> Indisponível</span></div>
+        <div class="calendar-legend" aria-label="Legenda do calendário"><span><i class="legend-dot available"></i> Dias liberados para solicitação</span></div>
         <p class="availability-notice" id="availabilityNotice" role="status">Consultando disponibilidade…</p>
         <form id="bookingForm" autocomplete="off">
           <div class="field-grid">
             <div class="field"><label for="owner">Seu nome</label><input id="owner" name="owner" placeholder="Ex.: Maria" maxlength="90" required></div>
             <div class="field"><label for="pet">Nome do pet</label><input id="pet" name="pet" placeholder="Ex.: Thor" maxlength="70" required></div>
-            <div class="field"><label for="region">Região</label><select id="region" name="region" required><option value="">Selecione</option><option>Plano Piloto</option><option>Guará</option><option>Taguatinga</option><option>Samambaia</option><option>Riacho Fundo</option><option>Águas Claras</option></select></div>
+            <div class="field"><label for="region">Região</label><select id="region" name="region" required><option value="">Selecione</option><option>Plano Piloto</option><option>Samambaia</option><option>Taguatinga</option><option>Vicente Pires</option><option>Águas Claras</option><option>Guará</option><option>Riacho Fundo</option><option>Ceilândia</option><option>Recanto das Emas</option><option>Sudoeste</option><option>Octogonal</option><option>Cruzeiro</option><option>Noroeste</option><option>Setor de Mansões</option><option>Park Way</option><option>Núcleo Bandeirante</option><option>Candangolândia</option><option>Outra região (a combinar)</option></select></div>
             <div class="field"><label for="period">Período desejado</label><select id="period" name="period" required><option value="">Selecione</option><option>Manhã</option><option>Tarde</option><option>Noite</option></select></div>
             <fieldset class="field full services-field"><legend>Serviços desejados <small>(você pode escolher mais de um)</small></legend>
               <div class="service-options" id="serviceOptions">
@@ -203,7 +211,7 @@
 </main>
 <footer><div class="container"><div><strong>Dra. Adryele Gonçalves Dias Primo</strong><p>Medicina Veterinária Domiciliar • Distrito Federal</p><p>CRMV-DF 5341 · CNPJ 48.832.255/0001-47</p></div><p>© <span id="year"></span> Dra. Adryele. Todos os direitos reservados.</p></div></footer>
 <a href="https://wa.me/556192374671" data-whatsapp="direct" class="floating-contact" target="_blank" rel="noopener noreferrer" aria-label="Conversar com a Dra. Adryele pelo WhatsApp">☏ Falar no WhatsApp ↗</a>
-<script src="config.js?v=6-2"></script>
-<script src="app.js?v=6-2" defer></script>
+<script src="config.js?v=7-0"></script>
+<script src="app.js?v=7-0" defer></script>
 </body>
 </html>
