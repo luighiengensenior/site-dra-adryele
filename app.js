@@ -1,9 +1,8 @@
 'use strict';
 (() => {
-  const config = window.SITE_CONFIG || {};
-  const number = String(config.whatsappNumber || '').replace(/\D/g, '');
-  // Aceita o contato brasileiro previamente testado com 8 ou 9 digitos locais.
-  // Restringe a somente digitos e evita redirecionamentos arbitrarios.
+  // Contato CONFIRMADO pelo proprietário: não depender de config.js em cache.
+  // Número público usado APENAS em links do WhatsApp, sem dados sensíveis.
+  const number = '556192374671';
   const whatsappConfigured = /^55[1-9]\d(?:[2-9]\d{7}|9\d{8})$/.test(number);
   const $ = id => document.getElementById(id);
   const getToday = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };

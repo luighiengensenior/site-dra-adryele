@@ -21,10 +21,10 @@ js=(root/'app.js').read_text(encoding='utf8');cfg=(root/'config.js').read_text(e
 for path in expected:
  if not (root/path).exists():errors.append('Arquivo publico ausente: '+path)
 if any(not x.get('src') for x in p.scripts):errors.append('Script inline detectado')
-if any(not re.fullmatch(r'[A-Za-z0-9_.-]+\.js',x.get('src','')) for x in p.scripts):errors.append('Script remoto ou caminho suspeito')
+if any(not re.fullmatch(r'[A-Za-z0-9_.-]+\.js(?:\?v=[A-Za-z0-9_-]+)?',x.get('src','')) for x in p.scripts):errors.append('Script remoto ou caminho suspeito')
 if p.events: errors.append('Eventos HTML inline detectados')
 if 'innerHTML' in js or re.search(r'\beval\s*\(|\bnew\s+Function\s*\(',js):errors.append('API perigosa de execução/HTML')
-if any('wa.me' in a.get('href','') for a in p.links):errors.append('WhatsApp fixo dentro do HTML')
+if any('wa.me' in a.get('href','') and a.get('href')!='https://wa.me/556192374671' for a in p.links):errors.append('Destino WhatsApp fora do contato confirmado')
 if not any(a.get('http-equiv','').lower()=='content-security-policy' for a in p.meta):errors.append('Sem CSP')
 if "script-src 'self'" not in html or "object-src 'none'" not in html:errors.append('CSP enfraquecida')
 if 'window.SITE_CONFIG' not in cfg:errors.append('Configuração ausente')
