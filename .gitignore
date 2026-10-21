@@ -1,0 +1,14 @@
+# Publicacao por lista permitida: todos os demais arquivos ficam FORA do GitHub.
+*
+!.gitignore
+!.nojekyll
+!index.html
+!styles.css
+!app.js
+!config.js
+!disponibilidade.json
+!fotos/
+!fotos/*.jpeg
+!fotos/*.jpg
+!fotos/*.png
+# Nunca adicione manualmente backups, segredos, arquivos .env ou paineis privados.

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#eff8ff">
+  <meta name="description" content="Dra. Adryele: atendimento veterinário domiciliar para cães e gatos no Distrito Federal. Consultas, vacinas, exames laboratoriais, microchipagem e cuidados veterinários.">
+  <title>Dra. Adryele | Veterinária Domiciliar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#inicio" aria-label="Dra. Adryele, ir ao início">
+      <span class="brand-mark" aria-hidden="true">✚</span>
+      <span><strong>Dra. Adryele</strong><small>Veterinária domiciliar · CRMV-DF 5341</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Menu principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#regioes">Onde atendemos</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#agendamento">Agendamento</a>
+    </nav>
+    <a class="btn primary small" href="#agendamento">Agendar atendimento ↗</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-controls="navLinks" aria-expanded="false">☰ Menu</button>
+  </div>
+</header>
+<main>
+  <section class="hero" id="inicio">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Cuidado veterinário em casa</span>
+        <h1>Dra. Adryele <span>Atendimento Domiciliar</span></h1>
+        <p>Consultas, vacinas importadas com protocolos individualizados, exames laboratoriais, microchipagem e muito mais, no conforto de casa.</p>
+        <div class="hero-actions"><a class="btn primary" href="#agendamento">Solicitar atendimento ↗</a><a class="btn light" href="#servicos">Conhecer os serviços ↓</a></div>
+        <div class="hero-proof"><span><i class="check">✓</i> Para cães e gatos</span><span><i class="check">✓</i> No conforto da sua casa</span><span><i class="check">✓</i> CRMV-DF 5341</span></div>
+      </div>
+      <div class="hero-art">
+        <div class="pet-frame portrait-slider slider" id="heroSlider" aria-label="Fotos profissionais da Dra. Adryele">
+          <div class="slides-track">
+            <div class="slide"><img src="fotos/profissional-3.jpeg" alt="Dra. Adryele com jaleco branco em retrato profissional" fetchpriority="high"></div>
+            <div class="slide"><img src="fotos/profissional-1.jpeg" alt="Dra. Adryele com roupa clínica azul e estetoscópio" loading="lazy"></div>
+            <div class="slide"><img src="fotos/profissional-2.jpeg" alt="Dra. Adryele em sua formatura em Medicina Veterinária" loading="lazy"></div>
+          </div>
+          <button class="slide-arrow previous" type="button" data-slide="prev" aria-label="Ver foto profissional anterior">‹</button>
+          <button class="slide-arrow next" type="button" data-slide="next" aria-label="Ver próxima foto profissional">›</button>
+          <div class="slide-dots" aria-label="Selecionar foto profissional"></div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  <section id="servicos">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">Nossos serviços</span><h2>Cuidado completo, pertinho do seu pet</h2><p>Cuidados veterinários em domicílio, com atenção individualizada para cães e gatos em cada fase da vida.</p></div>
+      <div class="cards">
+        <article class="card"><div class="card-icon" aria-hidden="true">🩺</div><h3>Consultas veterinárias</h3><p>Avaliação clínica, orientações preventivas e acompanhamento da saúde do seu pet.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">💉</div><h3>Vacinas importadas</h3><p>Protocolos de vacinação individualizados: antirrábica, múltipla canina, quíntupla felina, quádrupla felina e gripe canina, conforme indicação clínica.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">🔬</div><h3>Exames laboratoriais</h3><p>Coleta de materiais e orientação para exames laboratoriais conforme a necessidade e avaliação clínica.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">🐶</div><h3>Acompanhamento pediátrico</h3><p>Cuidados para filhotes, incluindo desenvolvimento, prevenção e orientações aos tutores.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">💙</div><h3>Acompanhamento geriátrico</h3><p>Atenção especial à saúde e à qualidade de vida de cães e gatos idosos.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">💊</div><h3>Medicamentos</h3><p>Orientação, prescrição e administração de medicamentos quando indicados pela médica-veterinária.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">📋</div><h3>Atestados de saúde</h3><p>Avaliação para atestados de saúde em viagens nacionais e orientação sobre documentação exigida para viagens internacionais.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">🐾</div><h3>Microchipagem</h3><p>Identificação eletrônica para auxiliar no reconhecimento e na segurança do seu pet.</p></article>
+        <article class="card"><div class="card-icon" aria-hidden="true">🩹</div><h3>Curativos</h3><p>Avaliação e realização de curativos, além de orientações para os cuidados durante a recuperação.</p></article>
+      </div>
+      <p class="services-footnote">Os procedimentos dependem de avaliação veterinária, indicação clínica e disponibilidade. Para viagens internacionais, documentos oficiais podem depender de autoridades competentes.</p>
+    </div>
+  </section>
+  <section class="soft-section" id="regioes">
+    <div class="container split">
+      <div class="illustration"><img loading="lazy" src="fotos/atendimento-07.jpeg" alt="Dra. Adryele em atendimento domiciliar com gato"></div>
+      <div class="split-copy"><span class="eyebrow">Áreas atendidas</span><h2>Atendimento no conforto da sua casa</h2><p>A Dra. Adryele realiza visitas domiciliares em diferentes regiões do Distrito Federal. Consulte a disponibilidade e o deslocamento para seu endereço.</p>
+        <div class="areas"><span class="area">Plano Piloto</span><span class="area">Guará</span><span class="area">Taguatinga</span><span class="area">Samambaia</span><span class="area">Riacho Fundo</span><span class="area">Águas Claras</span></div>
+        <a class="btn primary" href="#agendamento">Ver calendário ↗</a>
+      </div>
+    </div>
+  </section>
+  <section class="about" id="sobre" aria-labelledby="aboutHeading">
+    <div class="container">
+      <div class="about-intro">
+        <div>
+          <span class="eyebrow">Conheça quem cuida do seu pet</span>
+          <h2 class="about-title" id="aboutHeading">Conheça a Dra. Adryele</h2>
+          <p class="full-name">Dra. Adryele Gonçalves Dias Primo</p>
+          <p class="professional-id">Médica-Veterinária · CRMV-DF 5341 · CNPJ 48.832.255/0001-47</p>
+          <div class="credentials" aria-label="Destaques da formação">
+            <span class="credential">🎓 Universidade de Brasília (UnB)</span>
+            <span class="credential">🌎 Experiência internacional</span>
+            <span class="credential">🐾 Atendimento individualizado</span>
+          </div>
+          <p class="about-lead">Graduada em <strong>Medicina Veterinária pela Universidade de Brasília (UnB)</strong>, a Dra. Adryele construiu uma trajetória acadêmica e profissional com experiências em hospitais veterinários, pesquisa científica e formação internacional.</p>
+          <p class="about-lead">Sua atuação reúne conhecimentos em clínica médica, anestesiologia, medicina felina, cuidados geriátricos e controle da dor, sempre com atenção às necessidades de cada paciente.</p>
+          <div class="about-feature">“Meu compromisso é oferecer um atendimento veterinário humanizado, responsável e individualizado, unindo conhecimento científico, dedicação e carinho pelo bem-estar animal.”</div>
+        </div>
+        <figure class="about-figure" aria-label="Galeria de fotos reais de atendimentos da Dra. Adryele">
+          <div class="consult-slider slider" id="consultSlider">
+            <div class="slides-track">
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-01.jpeg" alt="Registro real de atendimento veterinário domiciliar 1 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-02.jpeg" alt="Registro real de atendimento veterinário domiciliar 2 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-03.jpeg" alt="Registro real de atendimento veterinário domiciliar 3 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-04.jpeg" alt="Registro real de atendimento veterinário domiciliar 4 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-05.jpeg" alt="Registro real de atendimento veterinário domiciliar 5 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-06.jpeg" alt="Registro real de atendimento veterinário domiciliar 6 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-07.jpeg" alt="Registro real de atendimento veterinário domiciliar 7 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-08.jpeg" alt="Registro real de atendimento veterinário domiciliar 8 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-09.jpeg" alt="Registro real de atendimento veterinário domiciliar 9 da Dra. Adryele"></div>
+            <div class="slide"><img loading="lazy" src="fotos/atendimento-10.jpeg" alt="Registro real de atendimento veterinário domiciliar 10 da Dra. Adryele"></div>
+            </div>
+            <button class="slide-arrow previous" type="button" data-slide="prev" aria-label="Foto anterior de atendimento">‹</button>
+            <button class="slide-arrow next" type="button" data-slide="next" aria-label="Próxima foto de atendimento">›</button>
+            <div class="slide-dots" aria-label="Selecionar foto de atendimento"></div>
+          </div>
+          <figcaption>Momentos reais de atendimento • fotos completas, sem cortes • deslize ou use as setas</figcaption>
+        </figure>
+      </div>
+      <div class="journey-head"><h3>Formação e trajetória</h3><p>Toque ou clique nos cartões para conhecer os detalhes.</p></div>
+      <div class="journey-grid">
+        <details class="journey" open>
+          <summary><span class="summary-body"><span class="journey-icon" aria-hidden="true">🎓</span><span><strong>Graduação em Medicina Veterinária</strong><small>Universidade de Brasília (UnB)</small></span></span><span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="journey-content">
+            <p>A Dra. Adryele é <strong>graduada em Medicina Veterinária pela Universidade de Brasília (UnB)</strong>, instituição onde construiu uma base acadêmica para sua atuação profissional.</p>
+            <p>Sua formação orienta uma prática veterinária responsável, com atenção individualizada à saúde e ao bem-estar de cães e gatos.</p>
+          </div>
+        </details>
+        <details class="journey">
+          <summary><span class="summary-body"><span class="journey-icon" aria-hidden="true">🏥</span><span><strong>Experiência clínica</strong><small>Hospitais e centros veterinários</small></span></span><span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="journey-content">
+            <p>Vivência profissional no <strong>Hospital Veterinário da Universidade Anhembi Morumbi (SP)</strong>, no <strong>Centro Veterinário Asa Sul (DF)</strong> e no <strong>Hospital Veterinário da UnB</strong>.</p>
+            <p>Experiência nas áreas de clínica médica, anestesiologia, medicina felina, geriatria e controle da dor.</p>
+          </div>
+        </details>
+        <details class="journey">
+          <summary><span class="summary-body"><span class="journey-icon" aria-hidden="true">🔬</span><span><strong>Pesquisa sobre dor crônica e liderança</strong><small>Estudos científicos em cães e gatos</small></span></span><span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="journey-content">
+            <p>A Dra. Adryele realizou um <strong>estudo sobre dor crônica em cães e gatos</strong>, aprofundando seus conhecimentos sobre esse importante tema da medicina veterinária.</p>
+            <p>Também participou de projetos científicos e atuou como <strong>coordenadora do Grupo de Estudos em Medicina Canina da UnB</strong>.</p>
+          </div>
+        </details>
+        <details class="journey">
+          <summary><span class="summary-body"><span class="journey-icon" aria-hidden="true">🌎</span><span><strong>Formação internacional</strong><small>George Washington University e idiomas</small></span></span><span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="journey-content">
+            <p>Participou do <strong>Global Leadership Pre-College Program</strong>, na <strong>George Washington University</strong>, nos Estados Unidos.</p>
+            <p>Possui formação em <strong>Língua Inglesa pelo Centro Interescolar de Línguas de Taguatinga</strong>, com mais de <strong>700 horas de estudos</strong>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+  <section class="booking" id="agendamento">
+    <div class="container booking-wrap">
+      <div class="booking-copy"><span class="eyebrow">Agende uma visita</span><h2>Escolha uma data para cuidar do seu melhor amigo.</h2><p>Selecione o dia desejado, informe alguns dados e envie uma solicitação pelo WhatsApp. A equipe confirma os horários disponíveis diretamente com você.</p>
+        <ul class="steps"><li><b>1</b> Selecione uma data no calendário</li><li><b>2</b> Preencha os dados do atendimento</li><li><b>3</b> Envie o pedido pelo WhatsApp</li></ul>
+      </div>
+      <div class="booking-card">
+        <h3>Solicitar agendamento</h3>
+        <div class="calendar-head"><strong id="monthLabel" aria-live="polite"></strong><div class="cal-buttons"><button type="button" id="prevMonth" aria-label="Mês anterior">‹</button><button type="button" id="nextMonth" aria-label="Próximo mês">›</button></div></div>
+        <div class="weekdays" aria-hidden="true"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
+        <div id="calendarDays" class="calendar-days" role="group" aria-label="Escolha o dia desejado"></div>
+        <div class="calendar-legend" aria-label="Legenda do calendário"><span><i class="legend-dot available"></i> Disponível</span><span><i class="legend-dot busy"></i> Lotado</span><span><i class="legend-dot blocked"></i> Indisponível</span></div>
+        <p class="availability-notice" id="availabilityNotice" role="status">Consultando disponibilidade…</p>
+        <form id="bookingForm" autocomplete="off">
+          <div class="field-grid">
+            <div class="field"><label for="owner">Seu nome</label><input id="owner" name="owner" placeholder="Ex.: Maria" maxlength="90" required></div>
+            <div class="field"><label for="pet">Nome do pet</label><input id="pet" name="pet" placeholder="Ex.: Thor" maxlength="70" required></div>
+            <div class="field"><label for="region">Região</label><select id="region" name="region" required><option value="">Selecione</option><option>Plano Piloto</option><option>Guará</option><option>Taguatinga</option><option>Samambaia</option><option>Riacho Fundo</option><option>Águas Claras</option></select></div>
+            <div class="field"><label for="period">Período desejado</label><select id="period" name="period" required><option value="">Selecione</option><option>Manhã</option><option>Tarde</option><option>Noite</option></select></div>
+            <fieldset class="field full services-field"><legend>Serviços desejados <small>(você pode escolher mais de um)</small></legend>
+              <div class="service-options" id="serviceOptions">
+                <label><input type="checkbox" name="services" value="Consulta veterinária"><span>Consulta veterinária</span></label>
+                <label><input type="checkbox" name="services" value="Vacinação individualizada"><span>Vacinação individualizada</span></label>
+                <label><input type="checkbox" name="services" value="Exames laboratoriais"><span>Exames laboratoriais</span></label>
+                <label><input type="checkbox" name="services" value="Acompanhamento pediátrico"><span>Acompanhamento pediátrico</span></label>
+                <label><input type="checkbox" name="services" value="Acompanhamento geriátrico"><span>Acompanhamento geriátrico</span></label>
+                <label><input type="checkbox" name="services" value="Administração de medicamentos"><span>Administração de medicamentos</span></label>
+                <label><input type="checkbox" name="services" value="Atestado de saúde"><span>Atestado de saúde</span></label>
+                <label><input type="checkbox" name="services" value="Microchipagem"><span>Microchipagem</span></label>
+                <label><input type="checkbox" name="services" value="Curativos"><span>Curativos</span></label>
+              </div>
+              <p class="services-picked" id="servicesPicked" aria-live="polite">Nenhum serviço selecionado.</p>
+            </fieldset>
+          </div>
+          <button class="btn primary" type="submit">Enviar solicitação pelo WhatsApp ↗</button>
+        </form>
+        <p class="booking-caption">Os dados preenchidos são enviados pelo seu navegador ao WhatsApp apenas quando você confirma o envio. Este site não armazena suas informações em um banco de dados.</p>
+        <p class="booking-caption" id="bookingHint" aria-live="polite">A solicitação de data não garante a reserva; a Dra. Adryele confirma pelo WhatsApp.</p>
+        <div class="direct-contact"><span>Prefere tirar uma dúvida antes?</span><a class="btn whatsapp" data-whatsapp="direct" target="_blank" rel="noopener noreferrer" href="https://wa.me/556192374671">☏ Conversar diretamente no WhatsApp ↗</a></div>
+      </div>
+    </div>
+  </section>
+  <section id="duvidas">
+    <div class="container"><div class="section-head"><span class="eyebrow">Dúvidas frequentes</span><h2>Como funciona o atendimento?</h2></div>
+      <div class="faq-list"><details><summary>O atendimento é realizado na minha residência?</summary><p>Sim. Você informa sua região e combina os detalhes da visita diretamente com a Dra. Adryele.</p></details><details><summary>O agendamento pelo site é imediato?</summary><p>Não. O calendário serve para enviar a sua preferência de data. A confirmação depende da disponibilidade informada pelo WhatsApp.</p></details><details><summary>Como saber o valor do atendimento?</summary><p>Peça um orçamento pelo WhatsApp, informando o serviço e sua região. Valores e eventual taxa de deslocamento são confirmados antes da visita.</p></details><details><summary>Posso usar o site em uma emergência?</summary><p>Este formulário não é um canal de urgência. Em caso de emergência veterinária, procure imediatamente um serviço presencial de pronto atendimento 24 horas.</p></details></div>
+    </div>
+  </section>
+  
+</main>
+<footer><div class="container"><div><strong>Dra. Adryele Gonçalves Dias Primo</strong><p>Medicina Veterinária Domiciliar • Distrito Federal</p><p>CRMV-DF 5341 · CNPJ 48.832.255/0001-47</p></div><p>© <span id="year"></span> Dra. Adryele. Todos os direitos reservados.</p></div></footer>
+<a href="https://wa.me/556192374671" data-whatsapp="direct" class="floating-contact" target="_blank" rel="noopener noreferrer" aria-label="Conversar com a Dra. Adryele pelo WhatsApp">☏ Falar no WhatsApp ↗</a>
+<script src="config.js"></script>
+<script src="app.js" defer></script>
+</body>
+</html>
