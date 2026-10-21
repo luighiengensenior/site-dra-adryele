@@ -2,8 +2,9 @@
 (() => {
   const config = window.SITE_CONFIG || {};
   const number = String(config.whatsappNumber || '').replace(/\D/g, '');
-  // 55 + DDD + nove digitos, com 9 inicial (celular brasileiro).
-  const whatsappConfigured = /^55[1-9]\d9\d{8}$/.test(number);
+  // Aceita o contato brasileiro previamente testado com 8 ou 9 digitos locais.
+  // Restringe a somente digitos e evita redirecionamentos arbitrarios.
+  const whatsappConfigured = /^55[1-9]\d(?:[2-9]\d{7}|9\d{8})$/.test(number);
   const $ = id => document.getElementById(id);
   const getToday = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
   const today = getToday();

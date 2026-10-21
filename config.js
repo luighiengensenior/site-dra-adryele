@@ -1,7 +1,6 @@
-// CONFIGURACAO PUBLICA. NUNCA adicione senhas, tokens ou chaves privadas.
-// INFORME O WHATSAPP COMPLETO SOMENTE DEPOIS DE CONFIRMAR COM A DRA. ADRYELE.
-// Formato exigido: 55 + DDD (2 digitos) + celular (9 digitos).
-// Sem numero confirmado, os botoes sao desativados (evita enviar dados a terceiros).
+// Configuracao PUBLICA. Nunca adicione senhas, tokens ou chaves privadas.
+// Contato confirmado pelo proprietario como funcional na versao anterior.
+// Manter exatamente o numero ja testado, com codigo do pais 55.
 window.SITE_CONFIG = Object.freeze({
-  whatsappNumber: ''
+  whatsappNumber: '556192374671'
 });

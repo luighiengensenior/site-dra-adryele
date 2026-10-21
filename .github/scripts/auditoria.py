@@ -30,8 +30,8 @@ if "script-src 'self'" not in html or "object-src 'none'" not in html:errors.app
 if 'window.SITE_CONFIG' not in cfg:errors.append('Configuração ausente')
 m=re.search(r"whatsappNumber:\s*'([^']*)'",cfg)
 if not m:errors.append('Configuração de WhatsApp não reconhecida')
-elif m.group(1) and not re.fullmatch(r'55[1-9]\d9\d{8}',m.group(1)):
- errors.append('WhatsApp inválido: configurar número brasileiro completo')
+elif m.group(1) and not re.fullmatch(r'55[1-9]\d(?:[2-9]\d{7}|9\d{8})',m.group(1)):
+ errors.append('WhatsApp inválido: confira o numero de contato previamente testado')
 if re.search(r'(?i)(service[_-]?role|github_pat_|ghp_[a-z0-9]|sk_live_|BEGIN [A-Z ]*PRIVATE KEY)',html+'\n'+js+'\n'+cfg+'\n'+css):errors.append('Possível credencial em arquivos públicos')
 try:
  data=json.loads((root/'disponibilidade.json').read_text(encoding='utf8'))
