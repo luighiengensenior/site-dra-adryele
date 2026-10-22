@@ -83,87 +83,56 @@
   }
   initSlider($('heroSlider'));initSlider($('consultSlider'));
 
+  // ADRYELE_CALENDARIO_V10: todos os dias futuros podem ser solicitados.
+  // A data selecionada e somente uma preferencia; confirmacao no WhatsApp.
   const days=$('calendarDays'),monthLabel=$('monthLabel'),prev=$('prevMonth'),next=$('nextMonth');
   const notice=$('availabilityNotice'),hint=$('bookingHint');
   let viewing=new Date(today.getFullYear(),today.getMonth(),1);
-  let chosen=null, states=new Map(), defaultStatus='available', loading=false, loadError=false, requested=0;
+  let chosen=null,loading=false,loadError=false;
   const maxMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
-  const stateFor=key=>states.get(key)||defaultStatus;
-  const monthStart=()=>dateKey(new Date(viewing.getFullYear(),viewing.getMonth(),1));
-  const monthEnd=()=>dateKey(new Date(viewing.getFullYear(),viewing.getMonth()+1,0));
-
-  // A disponibilidade e PUBLICA e somente LEITURA. Visitantes nunca gravam alteracoes.
-  // As datas sao alteradas pelo responsavel no arquivo disponibilidade.json e publicadas via GitHub.
-  // V9: todas as datas futuras podem ser solicitadas; a Dra. confirma pelo WhatsApp.
-  // Nao ha promessa de vaga nem necessidade de liberar datas no painel.
-  async function getMonthStatus() {
-    return {results:new Map(),defaultStatus:'available'};
-  }
+  // Mantem compatibilidade com a verificacao feita ao enviar o formulario.
+  async function getMonthStatus(){return {results:new Map(),defaultStatus:'available'};}
   function drawCalendar(){
+    if(!days||!monthLabel||!prev||!next)return;
+    const now=getToday();
     monthLabel.textContent=viewing.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
     days.replaceChildren();
     const first=new Date(viewing.getFullYear(),viewing.getMonth(),1);
-    const total=new Date(viewing.getFullYear(),viewing.getMonth()+1,0).getDate();
-    const currentToday = getToday();
-    prev.disabled=viewing.getFullYear()===currentToday.getFullYear()&&viewing.getMonth()===currentToday.getMonth();
+    const last=new Date(viewing.getFullYear(),viewing.getMonth()+1,0).getDate();
+    prev.disabled=viewing.getFullYear()===now.getFullYear()&&viewing.getMonth()===now.getMonth();
     next.disabled=viewing.getFullYear()===maxMonth.getFullYear()&&viewing.getMonth()===maxMonth.getMonth();
-    for(let n=0;n<first.getDay();n++){
-      const space=document.createElement('span');space.className='day spacer';days.appendChild(space);
+    for(let i=0;i<first.getDay();i++){
+      const space=document.createElement('span');space.className='day spacer';space.setAttribute('aria-hidden','true');
+      days.appendChild(space);
     }
-    for(let n=1;n<=total;n++){
+    for(let n=1;n<=last;n++){
       const date=new Date(viewing.getFullYear(),viewing.getMonth(),n);
-      const key=dateKey(date),status=stateFor(key);
-      // Sempre mostrar o número do dia. Somente dias liberados podem ser selecionados.
-      const isPast=date<currentToday;
-      const selectable=!loading&&!loadError&&!isPast&&status==='available';
-      const visualStatus=isPast?'past':status==='full'?'lotado':selectable?'available':'blocked';
-      const btn=document.createElement('button');
-      btn.type='button';btn.textContent=String(n);
-      btn.className='day '+visualStatus;
-      btn.disabled=!selectable;
-      const description=isPast?'data passada':status==='full'?'lotado':selectable?'disponível para solicitação':'não liberado';
-      btn.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+', '+description);
-      btn.title=description.charAt(0).toUpperCase()+description.slice(1);
-      if(selectable){
-        btn.setAttribute('aria-pressed',String(chosen===key));
-        if(chosen===key)btn.classList.add('selected');
-        btn.addEventListener('click',()=>{
+      const key=dateKey(date),past=date<now;
+      const button=document.createElement('button');button.type='button';button.textContent=String(n);
+      button.className='day '+(past?'past':'available');button.disabled=past;
+      button.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+(past?', data passada':', escolha esta data para consultar no WhatsApp'));
+      button.title=past?'Data passada':'Solicitar esta data pelo WhatsApp';
+      if(!past){
+        button.setAttribute('aria-pressed',String(chosen===key));
+        if(chosen===key)button.classList.add('selected');
+        button.addEventListener('click',()=>{
           chosen=key;drawCalendar();
-          hint.textContent='Data solicitada: '+date.toLocaleDateString('pt-BR')+'. A reserva só acontece após confirmação pelo WhatsApp.';
+          if(hint)hint.textContent='Data preferida: '+date.toLocaleDateString('pt-BR')+'. A Dra. Adryele confirma a disponibilidade pelo WhatsApp.';
         });
       }
-      days.appendChild(btn);
+      days.appendChild(button);
     }
+    if(notice){notice.textContent='Escolha qualquer dia futuro. A disponibilidade será confirmada pelo WhatsApp.';notice.classList.remove('warn');}
   }
-  async function refreshCalendar(){
-    const requestId=++requested;
-    loading=true;loadError=false;
-    notice.textContent='Carregando disponibilidade…';notice.classList.remove('warn');
+  function refreshCalendar(){
+    const now=getToday();
+    if(viewing.getFullYear()<now.getFullYear()||(viewing.getFullYear()===now.getFullYear()&&viewing.getMonth()<now.getMonth()))
+      viewing=new Date(now.getFullYear(),now.getMonth(),1);
+    if(chosen&&makeLocalDate(chosen)<now){chosen=null;if(hint)hint.textContent='Selecione uma nova data de preferência.';}
     drawCalendar();
-    try {
-      const data=await getMonthStatus();
-      if(requestId!==requested)return;
-      states=data.results;defaultStatus=data.defaultStatus;
-      loading=false;
-      if(chosen&&(stateFor(chosen)!=='available'||makeLocalDate(chosen)<getToday())){
-        chosen=null;hint.textContent='A data escolhida ficou indisponivel. Selecione outra.';
-      }
-      const hasAvailableThisMonth = [...states.entries()].some(([key,status]) =>
-        key >= monthStart() && key <= monthEnd() && status === 'available' && makeLocalDate(key) >= getToday());
-      notice.textContent = hasAvailableThisMonth || defaultStatus === 'available'
-        ? 'Todas as datas futuras podem ser solicitadas. A Dra. Adryele confirma a disponibilidade pelo WhatsApp.'
-        : 'Escolha uma data futura e consulte a disponibilidade pelo WhatsApp.';
-      notice.classList.remove('warn');drawCalendar();
-    }catch(error){
-      if(requestId!==requested)return;
-      loadError=true;loading=false;chosen=null;states=new Map();drawCalendar();
-      notice.textContent='Calendario temporariamente indisponivel. Fale diretamente pelo WhatsApp.';
-      notice.classList.add('warn');
-      console.error('Falha ao carregar agenda:',error);
-    }
   }
-  prev.addEventListener('click',()=>{viewing=new Date(viewing.getFullYear(),viewing.getMonth()-1,1);refreshCalendar();});
-  next.addEventListener('click',()=>{viewing=new Date(viewing.getFullYear(),viewing.getMonth()+1,1);refreshCalendar();});
+  prev?.addEventListener('click',()=>{viewing=new Date(viewing.getFullYear(),viewing.getMonth()-1,1);refreshCalendar();});
+  next?.addEventListener('click',()=>{viewing=new Date(viewing.getFullYear(),viewing.getMonth()+1,1);refreshCalendar();});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendar();});
 
   const checkboxes=[...document.querySelectorAll('input[name="services"]')];

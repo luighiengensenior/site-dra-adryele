@@ -364,3 +364,8 @@ a.contact-unavailable {
 .calendar-days button.day.past {color:#bdcad4;background:#f9fbfc;border:1px solid #edf2f5;text-decoration:none;}
 .calendar-days button.day.available {color:#086647;background:#dcf8eb;border:1px solid #8fdcc3;text-decoration:none;}
 .calendar-days button.day.available.selected {color:#fff;background:var(--blue);border-color:var(--blue);}
+/* ADRYELE_CALENDARIO_V10: dias exibidos e datas futuras selecionaveis */
+.calendar-days button.day {display:flex;align-items:center;justify-content:center;min-width:0;aspect-ratio:1.08;}
+.calendar-days button.day.past {color:#bacad6;background:#f8fafc;border:1px solid #eef2f5;opacity:1;cursor:not-allowed;text-decoration:none;}
+.calendar-days button.day.available {background:#e2f8ef;color:#0b684f;border:1px solid #a4dfca;}
+.calendar-days button.day.available.selected {background:var(--blue);color:#fff;border-color:var(--blue);}
