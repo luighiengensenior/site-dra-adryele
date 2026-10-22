@@ -357,3 +357,10 @@ a.contact-unavailable {
 .calendar-days .day.available {background:#eaf7ff;border:1px solid #a1d8eb;color:#0a5b86}
 .calendar-days .day.available.selected {background:var(--blue);color:#fff;border-color:var(--blue)}
 @media(max-width:700px){.zazuu-partner{padding:22px;flex-direction:column;align-items:stretch;gap:20px}.zazuu-link{white-space:normal;text-align:center}}
+
+/* V9: calendario exibe todos os dias, com datas passadas desabilitadas. */
+.calendar-days button.day {display:flex;align-items:center;justify-content:center;aspect-ratio:1.08;min-width:0;}
+.calendar-days button.day:disabled {opacity:1;cursor:not-allowed;}
+.calendar-days button.day.past {color:#bdcad4;background:#f9fbfc;border:1px solid #edf2f5;text-decoration:none;}
+.calendar-days button.day.available {color:#086647;background:#dcf8eb;border:1px solid #8fdcc3;text-decoration:none;}
+.calendar-days button.day.available.selected {color:#fff;background:var(--blue);border-color:var(--blue);}

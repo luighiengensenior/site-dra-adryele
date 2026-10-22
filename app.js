@@ -86,7 +86,7 @@
   const days=$('calendarDays'),monthLabel=$('monthLabel'),prev=$('prevMonth'),next=$('nextMonth');
   const notice=$('availabilityNotice'),hint=$('bookingHint');
   let viewing=new Date(today.getFullYear(),today.getMonth(),1);
-  let chosen=null, states=new Map(), defaultStatus='blocked', loading=false, loadError=false, requested=0;
+  let chosen=null, states=new Map(), defaultStatus='available', loading=false, loadError=false, requested=0;
   const maxMonth=new Date(today.getFullYear(),today.getMonth()+11,1);
   const stateFor=key=>states.get(key)||defaultStatus;
   const monthStart=()=>dateKey(new Date(viewing.getFullYear(),viewing.getMonth(),1));
@@ -94,25 +94,11 @@
 
   // A disponibilidade e PUBLICA e somente LEITURA. Visitantes nunca gravam alteracoes.
   // As datas sao alteradas pelo responsavel no arquivo disponibilidade.json e publicadas via GitHub.
+  // V9: todas as datas futuras podem ser solicitadas; a Dra. confirma pelo WhatsApp.
+  // Nao ha promessa de vaga nem necessidade de liberar datas no painel.
   async function getMonthStatus() {
-    const res = await fetch('disponibilidade.json?v=7-0', {cache:'no-store'});
-    if (!res.ok) throw new Error('Agenda nao pode ser consultada ('+res.status+').');
-    const data = await res.json();
-    if (!data || !data.days || typeof data.days !== 'object' || Array.isArray(data.days) ||
-        data.defaultStatus !== 'blocked') {
-      throw new Error('Formato de agenda invalido.');
-    }
-    const results = new Map();
-    for (const [day,status] of Object.entries(data.days)) {
-      const validDay = /^\d{4}-\d{2}-\d{2}$/.test(day) && dateKey(makeLocalDate(day)) === day;
-      if (!validDay || !['available','blocked','full'].includes(status)) {
-        throw new Error('Data ou status incorreto no calendario.');
-      }
-      results.set(day,status);
-    }
-    return {results,defaultStatus:data.defaultStatus};
+    return {results:new Map(),defaultStatus:'available'};
   }
-
   function drawCalendar(){
     monthLabel.textContent=viewing.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
     days.replaceChildren();
@@ -127,22 +113,25 @@
     for(let n=1;n<=total;n++){
       const date=new Date(viewing.getFullYear(),viewing.getMonth(),n);
       const key=dateKey(date),status=stateFor(key);
-      const visible=!loading&&!loadError&&date>=currentToday&&status==='available';
-      // Só os dias liberados aparecem; os espaços vazios mantêm a grade alinhada.
-      if (!visible) {
-        const empty=document.createElement('span');empty.className='day empty-date';
-        empty.setAttribute('aria-hidden','true');days.appendChild(empty);continue;
+      // Sempre mostrar o número do dia. Somente dias liberados podem ser selecionados.
+      const isPast=date<currentToday;
+      const selectable=!loading&&!loadError&&!isPast&&status==='available';
+      const visualStatus=isPast?'past':status==='full'?'lotado':selectable?'available':'blocked';
+      const btn=document.createElement('button');
+      btn.type='button';btn.textContent=String(n);
+      btn.className='day '+visualStatus;
+      btn.disabled=!selectable;
+      const description=isPast?'data passada':status==='full'?'lotado':selectable?'disponível para solicitação':'não liberado';
+      btn.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+', '+description);
+      btn.title=description.charAt(0).toUpperCase()+description.slice(1);
+      if(selectable){
+        btn.setAttribute('aria-pressed',String(chosen===key));
+        if(chosen===key)btn.classList.add('selected');
+        btn.addEventListener('click',()=>{
+          chosen=key;drawCalendar();
+          hint.textContent='Data solicitada: '+date.toLocaleDateString('pt-BR')+'. A reserva só acontece após confirmação pelo WhatsApp.';
+        });
       }
-      const btn=document.createElement('button');btn.type='button';btn.textContent=n;
-      btn.className='day available';
-      btn.setAttribute('aria-label',date.toLocaleDateString('pt-BR',{dateStyle:'full'})+', disponível');
-      btn.title='Disponível para solicitar';
-      btn.setAttribute('aria-pressed',String(chosen===key));
-      if(chosen===key)btn.classList.add('selected');
-      btn.addEventListener('click',()=>{
-        chosen=key;drawCalendar();
-        hint.textContent='Data solicitada: '+date.toLocaleDateString('pt-BR')+'. A reserva só acontece após confirmação pelo WhatsApp.';
-      });
       days.appendChild(btn);
     }
   }
@@ -162,8 +151,8 @@
       const hasAvailableThisMonth = [...states.entries()].some(([key,status]) =>
         key >= monthStart() && key <= monthEnd() && status === 'available' && makeLocalDate(key) >= getToday());
       notice.textContent = hasAvailableThisMonth || defaultStatus === 'available'
-        ? 'Datas livres podem ser solicitadas. A confirmação será feita somente pelo WhatsApp.'
-        : 'Nenhuma data liberada neste mês. Consulte novamente em outro momento.';
+        ? 'Todas as datas futuras podem ser solicitadas. A Dra. Adryele confirma a disponibilidade pelo WhatsApp.'
+        : 'Escolha uma data futura e consulte a disponibilidade pelo WhatsApp.';
       notice.classList.remove('warn');drawCalendar();
     }catch(error){
       if(requestId!==requested)return;
